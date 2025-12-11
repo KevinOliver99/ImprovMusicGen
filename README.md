@@ -1,6 +1,6 @@
 # ImprovMusicGen
 
-**ImprovMusicGen** is a deep learning project focused on improvisational music generation using the MusicGen architecture and the Slakh dataset. This repository contains the code for training and evaluating the model, designed to generate role-aware musical improvisation based on a provided musical context.
+**ImprovMusicGen** is a deep learning project focused on real-time improvisational music generation using the MusicGen architecture and the Slakh dataset. This repository contains the code for training and evaluating a LoRA on top of the MusicGen small model, designed to generate role-aware and autoregressive musical improvisation based on a provided musical context.
 
 ## 📋 Table of Contents
 - [Prerequisites](#prerequisites)
