@@ -1,6 +1,6 @@
 # ImprovMusicGen
 
-**ImprovMusicGen** is a deep learning project focused on improvisational music generation using the MusicGen architecture and the Slakh dataset. This repository contains the code for training and evaluating the model, designed to generate target musical stems based on a provided musical context.
+**ImprovMusicGen** is a deep learning project focused on improvisational music generation using the MusicGen architecture and the Slakh dataset. This repository contains the code for training and evaluating the model, designed to generate role-aware musical improvisation based on a provided musical context.
 
 ## 📋 Table of Contents
 - [Prerequisites](#prerequisites)
@@ -37,19 +37,19 @@ This code was originally developed and tested on an HPC environment with the fol
 
 ## 💾 Data & Models
 
-To run the training or evaluation, you need to download the dataset and the pre-trained/fine-tuned models.
+To run the training or evaluation, you need to download the Slakh dataset and the MusicGen small model.
 
 1. **Dataset:**
    Download the Slakh dataset from Hugging Face:
    [WhatzInTheGrass/ImprovMusicGen-Slakh](https://huggingface.co/datasets/WhatzInTheGrass/ImprovMusicGen-Slakh)
    
-   *Place the data in the `DATA/` directory.*
 
 2. **Models:**
-   Download the model checkpoints from Hugging Face:
+   Download the MusicGen small model from Hugging Face:
    [WhatzInTheGrass/ImprovMusicGen-Models](https://huggingface.co/WhatzInTheGrass/ImprovMusicGen-Models)
    
-   *Place the models in the `models/` directory.*
+
+   *Place the downloaded `DATA/` and `models/` directories in the working directory, along with the code you cloned from the GitHub repository.
 
 ## 🚀 Usage
 
@@ -74,7 +74,7 @@ During validation/evaluation, the model produces 3 separate audio files for each
 
 1.  **Context (`*_context.wav`)**: 
     The raw musical context fed to the model. This includes all stems *other than* the target stem, plus the first 20 beats (context length) of the target stem. 
-    *Note: There is usually an audible dropout of the target stem around the middle of the audio where the generation begins.*
+    *Note: There is usually an audible dropout of the target stem around the middle of the audio where the generation is supposed to begin.*
 
 2.  **Target (`*_target.wav`)**: 
     Only the target stem. This includes the same first 20 beats of context, followed by the model's autoregressive output for the subsequent 20 beats.
@@ -89,3 +89,4 @@ During validation/evaluation, the model produces 3 separate audio files for each
 
 ---
 *Author: Kevin Bretz*
+*Email: k.o.bretz@umail.leidenuniv.nl*
