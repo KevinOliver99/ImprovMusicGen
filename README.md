@@ -1,26 +1,91 @@
-Environment Setup:
+# ImprovMusicGen
 
-python -m venv env
-source env/bin/activate
-pip install -r requirements.txt
+**ImprovMusicGen** is a deep learning project focused on improvisational music generation using the MusicGen architecture and the Slakh dataset. This repository contains the code for training and evaluating the model, designed to generate target musical stems based on a provided musical context.
 
-Download data and model from Huggingface and place in working directory:
-Data: https://huggingface.co/datasets/WhatzInTheGrass/ImprovMusicGen-Slakh
-Model: https://huggingface.co/WhatzInTheGrass/ImprovMusicGen-Models
+## 📋 Table of Contents
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Data & Models](#data--models)
+- [Usage](#usage)
+  - [Training](#training)
+  - [Evaluation](#evaluation)
+- [Outputs](#outputs)
+- [Configuration](#configuration)
 
-This code was run on an HPC using a single A100 GPU (80GB VRAM, 50 CPU cores). Parameters in the configs (hyperparameters in train_jam.py and eval_jam.py, computational resources in run_train.sbatch and run_eval.sbatch) may need to be adapted for varying setups.
+## 🛠 Prerequisites
 
-Start training with:
+This code was originally developed and tested on an HPC environment with the following specifications:
+- **GPU:** Single NVIDIA A100 (80GB VRAM)
+- **CPU:** 50 Cores
+
+**Note:** Hyperparameters in `train_jam.py` and `eval_jam.py`, as well as computational resources defined in `.sbatch` files, may need to be adapted if running on different hardware.
+
+## ⚙️ Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/KevinOliver99/ImprovMusicGen.git
+   cd ImprovMusicGen
+   ```
+
+2. **Set up the Python environment:**
+   ```bash
+   python -m venv env
+   source env/bin/activate
+   pip install -r requirements.txt
+   ```
+
+## 💾 Data & Models
+
+To run the training or evaluation, you need to download the dataset and the pre-trained/fine-tuned models.
+
+1. **Dataset:**
+   Download the Slakh dataset from Hugging Face:
+   [WhatzInTheGrass/ImprovMusicGen-Slakh](https://huggingface.co/datasets/WhatzInTheGrass/ImprovMusicGen-Slakh)
+   
+   *Place the data in the `DATA/` directory.*
+
+2. **Models:**
+   Download the model checkpoints from Hugging Face:
+   [WhatzInTheGrass/ImprovMusicGen-Models](https://huggingface.co/WhatzInTheGrass/ImprovMusicGen-Models)
+   
+   *Place the models in the `models/` directory.*
+
+## 🚀 Usage
+
+### Training
+To start the training process using the SLURM workload manager:
+
+```bash
 sbatch run_train.sbatch
+```
+*Training produces a checkpoint after every epoch.*
 
-Start evaluation with:
+### Evaluation
+To evaluate the model and generate samples:
+
+```bash
 sbatch run_eval.sbatch
+```
 
+## 🎵 Outputs
 
-Training produces a checkpoint after every epoch.
+During validation/evaluation, the model produces 3 separate audio files for each sample:
 
+1.  **Context (`*_context.wav`)**: 
+    The raw musical context fed to the model. This includes all stems *other than* the target stem, plus the first 20 beats (context length) of the target stem. 
+    *Note: There is usually an audible dropout of the target stem around the middle of the audio where the generation begins.*
 
-Validation produces 3 seperate audio files:
-1. The first file is the raw musical context fed to the model. This includes all stems other than the target stem, as well as the first 20 beats (context length) of the target stem. There is usually an audible dropout of the target stem around the middle of the audio.
-2. The second file is only the target stem. This includes the same first 20 beats of context that were included in the above audio file, followed by the models autoregressive output for another 20 beats.
-3. The third file merges both the musical context and the models autoregressive output into a single file.
+2.  **Target (`*_target.wav`)**: 
+    Only the target stem. This includes the same first 20 beats of context, followed by the model's autoregressive output for the subsequent 20 beats.
+
+3.  **Mix (`*_mix.wav`)**: 
+    The final result merging both the musical context and the model's generated output into a single cohesive track.
+
+## 🔧 Configuration
+
+- **Hyperparameters:** Adjustable in `train_jam.py` and `eval_jam.py`.
+- **Compute Resources:** Adjustable in `run_train.sbatch` and `run_eval.sbatch`.
+
+---
+*Author: Kevin Bretz*
