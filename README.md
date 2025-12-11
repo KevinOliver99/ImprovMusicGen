@@ -88,5 +88,5 @@ During validation/evaluation, the model produces 3 separate audio files for each
 - **Compute Resources:** Adjustable in `run_train.sbatch` and `run_eval.sbatch`.
 
 ---
-*Author: Kevin Bretz*
+*Author: Kevin Bretz*,
 *Email: k.o.bretz@umail.leidenuniv.nl*
