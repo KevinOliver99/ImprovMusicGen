@@ -4,6 +4,10 @@ python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 
+Download data and model from Huggingface and place in working directory:
+Data: https://huggingface.co/datasets/WhatzInTheGrass/ImprovMusicGen-Slakh
+Model: https://huggingface.co/WhatzInTheGrass/ImprovMusicGen-Models
+
 This code was run on an HPC using a single A100 GPU (80GB VRAM, 50 CPU cores). Parameters in the configs (hyperparameters in train_jam.py and eval_jam.py, computational resources in run_train.sbatch and run_eval.sbatch) may need to be adapted for varying setups.
 
 Start training with:
